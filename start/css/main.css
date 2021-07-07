@@ -1,0 +1,14 @@
+#main{
+    /* 배경색을 하얀색으로 */
+    background-color: whitesmoke;
+    /* 크기를 전체의 80%만큼 차지한다 */
+    width: 80%;
+    /* 텍스트의 속성을 가운데로 정렬 */
+    text-align: center;
+    /* 테두리의 둥근정도 */
+    border-radius: 20px;
+}
+
+p{
+    font-size: 10px;
+}
