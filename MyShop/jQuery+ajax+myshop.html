@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- JQuery를 import 합니다 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Document</title>
+
+    <!-- 구글폰트 가져오기 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Hi+Melody&family=Sunflower:wght@300&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Gamja Flower', cursive;
+            font-family: 'Hi Melody', cursive;
+            font-family: 'Sunflower', sans-serif;
+        }
+
+        .wrap {
+            width: 600px;
+            margin: 30px auto;
+            background-color: plum;
+            text-align: center;
+            border-radius: 30px;
+        }
+
+        .item-img {
+            margin: 30px 0px 30px;
+            width: 300px;
+            border-radius: 30px;
+        }
+
+        .input-group {
+            width: 550px;
+            margin: 0px auto 0px auto;
+        }
+
+        button {
+            margin-bottom: 30px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <img class="item-img"
+            src="http://img.danawa.com/prod_img/500000/462/010/img/13010462_1.jpg?shrink=360:360&_v=20210705160844">
+        <h2 style="text-align: left; margin-left: 15px;">고급 블루투스 이어폰<span style="font-size: 20px;">가격 : 120,000원</span>
+        </h2>
+        <p class="dollar" style="text-align: left; margin-left: 15px; color: blue;"></p>
+        <p style="text-align:left; margin-left: 15px; margin-right: 15px;">이 이어폰은 사실 특별한 힘을 가지고 있습니다.
+            착용하시면 자신감과 자존감이 뿜뿜 올라가는 마법같은 이어폰.
+            참고로 배터리는 다 닳아서 사용하실순 없으세요.
+        </p>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">주문자 이름</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">수량</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>-- 수량을 선택하세요 --</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">주소</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">전화번호</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <button type="button" onclick="js:hello()" class="btn btn-primary btn-order">주문하기</button>
+
+    </div>
+</body>
+<script>
+    function hello() {
+        alert('주문이 완료되었습니다.');
+    }
+
+    $(document).ready(function () {
+        get_dollar();
+    })
+
+    function get_dollar() {
+        $.ajax({
+            type: 'GET',
+            url: 'http://spartacodingclub.shop/sparta_api/rate',
+            data: {},
+            success: function (res) {
+                let result = res['rate'];
+                let temp_html = `달러-원 환율:${result}`
+                // alert(temp_html)
+                $(".dollar")[0].innerHTML = temp_html
+            }
+        })
+    }
+</script>
+
+</html>
