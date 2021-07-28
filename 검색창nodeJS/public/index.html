@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색창</title>
+    <style>
+        .search{
+            margin-top: 100px;
+            text-align: center;
+        }
+        .ajaxsearch{
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <form class="search" action="/searchResult">
+        검색창 : <input class="indata" type="text"> <input value="검색" type="button" class="ajaxsearch">
+    </form>
+
+    <div class="result"></div>
+
+
+    <script>
+        var s_btn = document.querySelector(".ajaxsearch")
+        s_btn.addEventListener('click',function(){
+            var inputdata = document.querySelector(".indata").value;
+            sendAjax('http://localhost:3000/searchResult',inputdata);
+        })
+
+        function sendAjax(url, data){
+            var data = {'indata':data}
+            data = JSON.stringify(data)
+            var xhr = new XMLHttpRequest()
+            xhr.open('POST', url)
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.send(data)
+            xhr.addEventListener('load',function(){
+                var result = JSON.parse(xhr.responseText)
+                document.querySelector('.result').innerHTML = result.data
+            })
+        }
+    </script>
+</body>
+</html>
