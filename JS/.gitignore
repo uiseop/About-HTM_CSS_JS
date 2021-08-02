@@ -6,3 +6,6 @@ node_modules
 # 임시파일
 *.temp
 *~
+
+dist
+public/dist

@@ -42,3 +42,30 @@ es6코드와 es5코드를 섞어 놓을 수 없으니 es5를 위한 저장소 �
 바벨 설치는 npm install --save-dev babel-preset-es2015
 es5를 es6로 변환하려면 먼저 ese6 변환 프리셋을 설치하고 바벨이 해당 프리셋을 사용하게끔 설정해야한데
 .babelrc파일을 생성하고 안에 presets:es2015를 작성 -> 바벨을 쓸때 es6를 사용한다는걸 알려주는것
+
+바벨과 걸프를 함께 사용하여 es6로 작성된 코드는 es5로 바꾸어 dist에 저장되도록 설정한데
+gulpfile.js를 수정함
+
+일련의 과정
+npm install -g gulp
+npm install --save-dev gulp-babel
+gulpfile.js 파일 생성하고 안에 
+const gulp = require('gulp') 
+const babel = require('gulp-babel') 
+gulp.task('default',function(){}) 작성 후 gulp실행하면 gulpfile.js 실행됨
+# babel-core, babel-cli 설치
+$ npm install --save-dev @babel/core @babel/cli
+# env preset 설치
+$ npm install --save-dev @babel/preset-env
+.babelrc파일을 생성하고 
+{
+  "presets": ["@babel/preset-env"]
+} 코드를 작성
+(걸프를 안쓰는 법은 package.json 의 scripts안에
+"scripts": {
+    "build": "babel src/js -w -d dist/js"
+  }
+  를 작성 --> npm script는 src/js 폴더에 있는 모든 es6파일을 트랜스파일링한 후 결과물을 dist/js에 저장
+  -w 는 타깃 폴더를 watch하여 자동으로 트랜스파일한다
+  -d 는 트랜스파일링된 겨로가물을 out-dir하여 저장될 폴더를 지정)
+
