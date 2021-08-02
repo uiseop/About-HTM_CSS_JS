@@ -1,0 +1,8 @@
+# npm 디버그 기록들
+npm-debug.log*
+# 프로젝트 의존성(node_modules는 전부 의존해서 크기가 커질 우려)
+node_modules
+
+# 임시파일
+*.temp
+*~
