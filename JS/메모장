@@ -23,6 +23,12 @@ tool.onMouseDown = function(event){
 
 Git : 프로젝트가 커져도 쉽게 관리할 수 있고 다른 개발자와 협력할 수 있게 돕는 버전 컨트롤 도구
 Node : 브라우저 밖에서 자바스크립트를 실행할 수 있게 하는 도구.
-Gulp : 반복적인 개발 작업을 자동화하는 빌드 도구. Grunt도 널리 쓰임
+Gulp : 반복적인 개발 작업을 자동화하는 빌드 도구. Grunt도 널리 쓰임. 이 책에선 걸프 사용
 Babel : ES6코드를 ES5코드로 변환하는 트랜스컴파일러
 ES린트: 자주 하는 실수를 피하고 더 나은 프로그래머가 되도록 돕는 린트 프로그램
+
+npm install 로컬 패키지를 설치할 때 --save 혹은 --save-dev플래그를 사용
+왜 why?? package.json에 설치한 패키지가 자동으로 등록됨
+
+나중에 npm install을 하면 package.json을 통해 dJango의 requirements.txt처럼 필요 라이브러리들이 다운받아짐
+
