@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build":"babel "
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.9",
     "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0"
+    "gulp-babel": "^8.0.0",
+    "gulp-eslint": "^6.0.0"
   }
 }
