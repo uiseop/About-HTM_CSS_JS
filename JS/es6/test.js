@@ -1,12 +1,15 @@
-const hand = [randFace(),randFace(),randFace()]
-for(let face of hand){
-    console.log(`You rolled ..${face}`);
+let o = {
+    message:'초기값'
 }
 
-function randFace(){
-    return ['crown','anchor','heart','club','diamond'][rand(0,5)]
+function f(m){
+    m.message = "f에서 수정함"
+    m = {
+        message:'hello'
+    }
+
+    console.log(m.message);
 }
 
-function rand(a,b){
-    return a + Math.floor((b-a+1)*Math.random())
-}
+f(o)
+console.log(o.message);
