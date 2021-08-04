@@ -1,15 +1,4 @@
-let o = {
-    message:'초기값'
-}
+const attr = ["nimble","perceptive","generous"]
+const html = `<ul><li>` + attr.join('</li><li>') + `</li></ul>`
 
-function f(m){
-    m.message = "f에서 수정함"
-    m = {
-        message:'hello'
-    }
-
-    console.log(m.message);
-}
-
-f(o)
-console.log(o.message);
+console.log(html);
