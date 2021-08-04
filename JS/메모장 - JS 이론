@@ -64,8 +64,14 @@ delete sam3.speak 처럼 delete를 통해 객체의 멤버를 삭제 가능함 O
 
 - Date : new Date()로 생성 가능 퀴찮아! 구글링 해! d.valueOf()사용하면 1970년1월1일부터 얼마나 지났는지 출력
 - RegExp : 정규표현식이래 17장에서################### 설명 가령 이메일 정규표현식같은 /.../안에 표현 ex)/\b[a-z0-9._-]+@[a-z_-]+\b/;
-- Map과 WeakMap
-- Set과 WeakSet
+- Map과 WeakMap : 키와 값을 연결한다는 점에서 객체와 비슷
+# Map은 es6이전에 객체만을 사용했을때의 문제점을 해결해줌
+1. 프로토타입 체인 떄문에 의도하지 않은 연결이 생길 수 있음
+2. 객체 안에 연결된 키와 값이 몇 개나 되는지 쉽게 알아낼 수 있는 방법이 없음 --> 각각 프로토타입 체인으로 연결되면 몰라
+3. 키는 반드시 문자열이나 심봉이여야 하므로 객체를 키로 써서 값과 연결할 수 없음
+4. 객체는 프로퍼티 순서를 전혀 보장하지 않음
+ex) 사용자 객체가 여럿 있고 이들에게 각각 역할을 부여한다하면 map.js에서 확인
+- Set과 WeakSet : 중복을 허용하지 않는 파이썬과 마찬가지
 
 원시값과 객체값의 참조 Call by Value VS Call by Reference
 Value를 매개변수를 통해 참조시키면 변수 자체를 받는것이 아니라 값을 받음. 원래 변수의 값에 변화가 없음
@@ -84,12 +90,12 @@ parseFloat("15.5 kph") --> 15.5 : 뒤에 기수는 default:10
 
 #for..of
 일반적인 파이썬의 for i in lst와 같음 : idx를 말고 idx번째 요소를 알고싶을때
-#for..in
+#for..in // test.js의 80번째줄 확인 --> 다른사람이 만든 프로퍼티에서 체인에 정의를 하면 상속이 이뤄지지 않음. 그래서 hasOwnProperty사용
 얘는 그냥 length를 받아오지 않고 키값을 통해 끝까지 탐색한다는 점에서 쓸모가 없어보임. 객체에서는 자주 쓴데!
 const o = {a:1,b:2,c:3,[SYM]:4}
 for(let prop in o){
     if(!o.hasOwnProperty(prop)) continue # hasOwnProperty는 해당 key값이 존재하는지 확인하는앤데 기본적으로 항상 쓰길 권장한데!!!!
-    console.log(`${prop}:${o[prop]})
+    console.log(`${prop}:${o[prop]}) 
 }
 Object.keys(o)는 객체타입 o의 키값들로 이뤄진 배열을 반환함 Symbol은 포함되지 않아 
 
