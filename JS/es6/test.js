@@ -91,3 +91,6 @@ console.log(Object.keys(obj));
 const bbj = new Super()
 
 console.log(Object.keys(bbj).toString());
+
+const arr = ['hello','bye','seeyou'];
+const it = arr.values();
