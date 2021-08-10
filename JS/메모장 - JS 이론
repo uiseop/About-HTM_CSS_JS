@@ -14,6 +14,7 @@ JS는 단일 스레드에서 동작한다. => 한번에 한가지 일만 할 수
 자바스크립트의 0.1은 이진 표현으로 나타낼 수 있는 숫자들 사이에 걸쳐있어서 n === 0.3 결과를 처리하지 못해 
 => if(Math.abs(n-0.3) < Number.EPSILON) ==> '느슨하게' 비교함 EPSILON은 매우 작은값임. 거의 0
 - 문자열 String -> \역슬레시를 쓰면 특수문자 사용 가능 가령 \" 같은, s.toUpperCase(); : 대문자로 변형
+문자열 교체 => input.replace("going", "walking") // input.includes("going") : going이 포함됐냐? //
 - 불리언
 - null
 - undefined
@@ -95,13 +96,14 @@ parseFloat("15.5 kph") --> 15.5 : 뒤에 기수는 default:10
 
 #for..of 모든 이터러블 객체에 사용할 수 있음
 일반적인 파이썬의 for i in lst와 같음 : idx를 말고 idx번째 요소를 알고싶을때
-#for..in // (객체에서 사용) test.js의 80번째줄 확인 --> 다른사람이 만든 프로퍼티에서 체인에 정의를 하면 상속이 이뤄지지 않음. 그래서 hasOwnProperty사용
+#for..in 얘는 index의 준말이라고 생각하자 // (객체에서 사용) test.js의 80번째줄 확인 --> 다른사람이 만든 프로퍼티에서 체인에 정의를 하면 상속이 이뤄지지 않음. 그래서 hasOwnProperty사용
 얘는 그냥 length를 받아오지 않고 키값을 통해 끝까지 탐색한다는 점에서 쓸모가 없어보임. 객체에서는 자주 쓴데!
 const o = {a:1,b:2,c:3,[SYM]:4}
 for(let prop in o){
     if(!o.hasOwnProperty(prop)) continue # hasOwnProperty는 해당 key값이 존재하는지 확인하는앤데 기본적으로 항상 쓰길 권장한데!!!!
     console.log(`${prop}:${o[prop]}) 
 }
+#forEach((인자)=>{함수내용}) // ex) students.forEach((v) => {})
 Object.keys(o)는 객체타입 o의 키값들로 이뤄진 배열을 반환함 Symbol은 포함되지 않아 
 
 #비교연산자
@@ -294,3 +296,64 @@ const intervalId = setInterval(function(){
     console.log(`${i}:${now}`);
 },5000)
 
+# callback 지옥
+콜백은 한번에 한가지의 처리만 가능하기때문에 한번에 여러가지의 오류처리를 하기 위해서는 여러개의 콜백을 사용해야함
+중괄호로 둘러싸여 끝없이 중첩된 함수는 가독성-유지보수 면에서 매우 안좋음
+또한 try...catch 블록은 같은 함수 안에서만 동작하기 때문에 더 깊은 블록에서 err를 호출한다고 해서 catch로 넘어가지 않아 
+때문에 Promise가 등장했다고 하는군
+# Promise의 등장
+Promise는 콜백의 단점을 해결하려는 시도 속에서 만들어졌음 => 안전하고 관리하기 쉬운 코드를 만들 수 있음
+콜백을 대체하는 것은 아님. 프로미스에서도 콜백은 사용 돼. 대신 예측 가능한 패턴으로 만들어지고, 콜백만 사용했을 떄 엉뚱한 현상이나 버그를 다소 해결함
+프로미스 기반 비동기적 함수를 호출하면 그 함수는 Promise인스턴스를 반환함. 프로미스는 성공, 실패 단 두가지 뿐이므로 확인이 매우 쉬움
+성공, 실패 값을 리턴하면 그 프로미스를 결정됐다(Settled)라고 함. 프로미스는 호출기임. 다른 함수에서 처리하게 하고 싶으면 넘기기만 하면 돼
+마치 음식점에서 받은 예약 호출기를 친구에게 맡기는 것과 비슷하게 예약한 인원이 떄맞춰 오기만 한다면, 음식점은 손님을 받음/호출기가 누구에게 있던
+
+function countDown(seconds){
+    return new Promise(function(resolve,reject){
+        for(let i=seconds; i>=0;i--){
+            setTimeout(function(){
+                if(i>0) console.log(i + '...')
+                else resolve(console.log("GO"))
+            },(seconds-i)*1000)
+        }
+    })
+}
+
+
+# 날짜 구성을 사용하기 위해서는 Moment.js를 사용하래 node로 설치해도 되고 CDN(Content Delivery Network)로 script를 불러와도 돼 - 모질라에서 확인
+# Math관련 수학 관련
+고정 소수점 => x.toFixed(3) : 소수점 3개까지 확인, 매개변수 n 에 따라 소수점 개수 정해짐
+제곱 : Math.pow(x,y) : x**y
+제곱근 : Math.sqrt(x) == Math.pow(x,0.5)
+절대값 : Math.abs(x)
+버림 : Math.floor(x)
+그냥 소수점 삭제 : Math.trunc(x)
+반올림 : Math.round(x)
+최대, 최소 : Math.min Math.max
+
+## 정규 표현식 : 이메일 주소나 URL, 전화번호처럼 보이는 문자열을 찾을떈 정규표현식을 잘 알아야함
+검색 알고리즘에 많이 사용되나봄
+
+## DOM 문서 객체 모델
+Node객체는 트리 구조로 구성 돼 parentNode랑 childNodes 프로퍼티, 자신에 대한 nodeName과 nodeType 프로퍼티가 있음
+getElementById, getElementsByClassName, getElementsByTagName ==> ID는 유일하기떄문에 s가 안붙어 나머진 해당되는 요소들을 반환해
+%%%%%%%%%%%%%%%querySelector이랑 querySelectorAll은 CSS선택자를 사용해서 요소를 찾는 메서드임. CSS선택자는 p, div같은 요소이름
+, ID,class,class의 조합 등 다양한방식으로 사용되서 get메서드보다 더 많이 사용된다
+
+모든 요소에는 textContent와 innerHTML이 있는데 textContent는 HTML태그를 모두 제거하고 순수한 텍스트 데이터만 제공
+innerHTML은 HTML태그를 그대로 제공함
+jQuery는 text와 html으로 관리하지 $('p').text('hello this is change') // $('p').html('<h1>hello</h1>') 형식 가능
+
+# 새 DOM요소 만들기 DOM이 없다 --> HTML이 없다
+document.createElement('p')  처럼 동적으로 DOM 노드를 생성할 수 있음
+생성한 요소는 const parent = document.getElementById('content') 에서 parent.insertBefore(p1, para1) 1은 새로 만든 애, 2는 어떤애 앞에 넣을것인지
+parent.appendChild(p1) 은 parent의 요소에 가장 밑에 추가해줌
+요소 <p>태그 안에 동적으로 class를 추가시켜줄 수 있는데 모든 요소에는 클래스를 나열하는 classList프로퍼티가 있음
+p.classList.add('highlight') 로 highlight의 css를 먹일 수 있음
+클래스를 제거할때는 classList.remove()를 사용해서 제거해
+
+# 코어 모듈, 파일 모듈, npm 모듈
+코어 모듈은 fs나 os처럼 노드 자체에서 제공하는 모듈
+파일모듈은 module.exports 에 할당되는 파일 (**.js파일같은)을 만들고 그 파일을 불러오는것
+npm모듈은 특별한 디렉터리 node_modules npm init하면 생성되는 애들
+require함수를 사용하면 노드는 함수의 매개변수를 보고 어떤 타입인지를 판단함
