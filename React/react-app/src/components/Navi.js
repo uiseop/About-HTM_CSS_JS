@@ -2,12 +2,15 @@ import React from 'react'
 
 class Navi extends React.Component{
     render(){
+      let data = this.props.data
+      let list = []
+      for(let i of data)
+        list.push(<li key={i.id}><a href={"/content/"+i.id}>{i.title}</a></li>)
+      
       return(
         <nav>
           <ul>
-              <li><a href="1.html">HTML</a></li>
-              <li><a href="2.html">Javascript</a></li>
-              <li><a href="3.html">CSS</a></li>
+              {list}
           </ul>
         </nav>
       )
