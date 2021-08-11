@@ -5,7 +5,12 @@ class Navi extends React.Component{
       let data = this.props.data
       let list = []
       for(let i of data)
-        list.push(<li key={i.id}><a href={"/content/"+i.id}>{i.title}</a></li>)
+        list.push(<li key={i.id}><a href={"/content/"+i.id}
+         data-id = {i.id}
+         onClick={function(e){
+          e.preventDefault()
+          this.props.onChangePage(e.target.dataset.id)
+        }.bind(this)}>{i.title}</a></li>)
       
       return(
         <nav>
