@@ -1,53 +1,47 @@
 import logo from './logo.svg';
 import './App.css';
 import {Component} from 'react'
+import Navi from './components/Navi.js'
+import Content from './components/Content'
+
 
 class Subject extends Component{ //<Subject></Subject>태그로 생성된것
   render(){ // class안에서 함수는 function을 생략한데
     return (
       <header>
-          <h1>Web</h1>
-          world wide web
+          <h1>{this.props.title}</h1>
+          {this.props.sub}
       </header>
     )
   }
 }
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      subjcet:{title:'WEB', sub:'World wide web'},
+      content:[
+        {id:1,title:'HTML',desc:"HTML is description"},
+        {id:2,title:'CSS',desc:"CSS is for design"},
+        {id:3,title:'Javascript',desc:"Javascript is for interaction"}
+      ]
+    }
+  }
   render(){
   return (
     <div className="App">
-      <Subject></Subject>
+      <Subject 
+      title={this.state.subjcet.title}
+      sub={this.state.subjcet.sub}
+      ></Subject>
       <Navi></Navi>
-      <Content></Content>
+      <Content title="Hello" text="This is 혁명"></Content>
     </div>
   );
 }
 }
 
-class Navi extends Component{
-  render(){
-    return(
-      <nav>
-        <ul>
-            <li><a href="1.html">HTML</a></li>
-            <li><a href="2.html">Javascript</a></li>
-            <li><a href="3.html">CSS</a></li>
-        </ul>
-      </nav>
-    )
-  }
-}
 
-class Content extends Component{
-  render(){
-    return(
-      <article>
-          <h2>HTML</h2>
-          HTML is Hyper Text Markup Language
-      </article>
-    )
-  }
-}
 
 export default App;
