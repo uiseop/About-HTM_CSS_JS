@@ -5,6 +5,7 @@ import Navi from './components/Navi.js'
 import ReadContent from './components/ReadContent'
 import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 
 
 class Subject extends Component{ //<Subject></Subject>태그로 생성된것
@@ -38,7 +39,7 @@ class App extends Component {
     }
   }
   render(){
-    var _title,_desc,_article = null
+    var _title,_desc,_article,_id = null
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title
       _desc = this.state.welcome.desc
@@ -61,6 +62,33 @@ class App extends Component {
           contents:result
         })
       }.bind(this)}></CreateContent>
+    }else if(this.state.mode === 'update'){
+      for(let data of this.state.contents){
+        if(data.id === this.state.selected_content_id)
+        {
+          _id = data.id
+          _title = data.title
+          _desc = data.desc
+          _article = <UpdateContent id={_id} title={_title} text={_desc} onSubmit={function(_id,_title,_desc){
+            // let result = 
+            let result = Array.from(this.state.contents)
+            console.log(result)
+            for(let i in result){
+              if (result[i].id === _id){
+                result[i] = {id:_id, title:_title, desc:_desc}
+                console.log(result[i])
+                break
+              }
+            }
+            this.setState({
+              contents : result
+            })
+
+      }.bind(this)}></UpdateContent>
+          break
+        }
+      }
+      
     }
     return (
       <div className="App">
@@ -97,9 +125,13 @@ class App extends Component {
         }.bind(this)}
         ></Navi>
         <Controller onChangeMode={function(_mode){
-          this.setState({
-            mode:_mode
-          })
+          if(_mode === 'delete'){
+
+          }else{
+            this.setState({
+              mode:_mode
+            })
+          }
         }.bind(this)}></Controller>
         {_article}
         
