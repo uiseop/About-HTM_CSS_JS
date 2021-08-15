@@ -167,7 +167,7 @@ function greet(){
 greet.call(bruce) --> Hello I'm Bruce
 greet.call(madeline) --> Hello I'm Madeline 출력 가능
 
-call을 사용하면 this로 사용할 객체를 넘기면서 해당 함수가 주어진 객체의 메서드인것처럼 재활용 가능
+# call을 사용하면 this로 사용할 객체를 넘기면서 해당 함수가 주어진 객체의 메서드인것처럼 재활용 가능
 
 function update(birth, occu){
     this.birth = birth
@@ -176,7 +176,7 @@ function update(birth, occu){
 
 update.call(bruce,1949,'singer') --> bruce는 인제 {'name':bruce, 'birth':1949, 'occu':'singer'} 가 됨
 
-&&2.apply는 매개변수를 배열로 받음 --> 매개변수를 배열로 받을 때 유용하겠네, 흔히 최대값, 최소값구할때 사용
+# 2.apply는 매개변수를 배열로 받음 --> 매개변수를 배열로 받을 때 유용하겠네, 흔히 최대값, 최소값구할때 사용
 update.apply(bruce,[1949,'singer'])
 Math.min.apply(null,[2,3,-4,15,7]) --> this값에 null을 쓴 이유는 this와 관계없이 동작하기때문, 무엇을 넘기든 상관x
 const newArr = [1940, 'singer']

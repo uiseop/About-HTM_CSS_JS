@@ -1,36 +1,27 @@
-var express = require('express')
-var app = express()
-var bodyParser = require('body-parser')
+const express = require('express')
+const app = express()
+const port = 3000
 
-app.listen(3000,function(){
-    console.log('server is going on 3000 port!!')
-});
- 
-app.use(express.static('public'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-app.set('view engine', 'ejs')
+const goodsRouter = require('./routes/goods.js')
 
+app.use('/goods',goodsRouter)
 
-app.get('/', function(req,res){
-    res.sendFile(__dirname + "/public/main.html")
-});
+// app.get('/goods/list', (req, res) => {
+//     res.send('상품 목록 페이지')
+// })
 
-app.get('/main', function(req,res){
-    res.sendFile(__dirname + '/public/form.html')
-});
+// app.get('/goods/detail', (req, res) => {
+//     res.send('상품 상세 페이지')
+// })
 
-app.post('/email_post', function(req,res){
-    // get : req.param('email')
-    console.log(req.body.email)
-    // res.send('<h1>Welcome!' + req.body.email + '</h1>') 
-    res.render('email.ejs', {'email' : req.body.email})
+app.get('/user/login', (req, res) => {
+    res.send('로그인 페이지')
 })
 
-app.post('/ajax_send_email',function(req,res){
-    console.log(req.body.email);
-    var response = {'result':'ok',
-                    'email':req.body.email                    
-};
-    res.json(response);
+app.get('/user/register', (req, res) => {
+    res.send('회원가입 페이지')
+})
+
+app.listen(port,()=>{
+    console.log(`listening port is ${port}`);
 })
