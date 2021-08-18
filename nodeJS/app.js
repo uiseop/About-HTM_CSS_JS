@@ -23,6 +23,14 @@ app.get('/test', (req, res) => {
   res.render('test', {name}); //test.js파일명으로 {name}을 보내줌
 })
 
+app.get('/home', (req,res)=>{
+    res.render('index')
+})
+
+app.get('/detail',(req,res)=>{
+    res.render('detail')
+})
+
 app.listen(port,()=>{
     console.log(`listening port is ${port}`);
 })
