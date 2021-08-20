@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 export default function DayList() {
   const days = useFetch("http://localhost:3001/days");
+
+  if(days.length === 0){
+    return <span>Loading...</span>
+  }
   // useEffect( () => {
   //   fetch('http://localhost:3001/days') // Promise가 반환됨 - 비동기 처리
   //   .then(res => { // 여기서 response는 http 응답이고 실제 json이 아니기에 json 매소드를 사용해

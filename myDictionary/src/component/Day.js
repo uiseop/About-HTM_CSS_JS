@@ -16,11 +16,11 @@ export default function Day() {
   //   .then(data =>{
   //     setWords(data)
   //   })
-  // },[dayParam])
   
   return (
     <div className="wordsz">
       <h1>Day {dayParam}</h1>
+      {words.length === 0 && <span>Loading...</span>}
       <table>
         <tbody>
           {words.map((word) => (

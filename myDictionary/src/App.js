@@ -2,6 +2,8 @@ import DayList from "./component/DayList";
 import Header from "./component/Header";
 import Day from "./component/Day";
 import NotFound from "./component/NotFound";
+import CreateWord from "./component/CreateWord";
+import CreateDay from "./component/CreateDay";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 function App() {
   return (
@@ -14,6 +16,12 @@ function App() {
           </Route>
           <Route path="/day/:day">
             <Day />
+          </Route>
+          <Route path="/create_word">
+            <CreateWord/>
+          </Route>
+          <Route path="/create_day">
+            <CreateDay/>
           </Route>
           {/* 없는주소는 not-found로 연결되도록 */}
           <Route>
