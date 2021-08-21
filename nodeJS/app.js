@@ -4,6 +4,8 @@ const port = 3000
 
 const goodsRouter = require('./routes/goods.js')
 const userRouter = require('./routes/user.js')
+const connect = require('./schemas')
+connect()
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
@@ -34,3 +36,4 @@ app.get('/detail',(req,res)=>{
 app.listen(port,()=>{
     console.log(`listening port is ${port}`);
 })
+
