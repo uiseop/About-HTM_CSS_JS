@@ -364,3 +364,42 @@ p.classList.add('highlight') 로 highlight의 css를 먹일 수 있음
 파일모듈은 module.exports 에 할당되는 파일 (**.js파일같은)을 만들고 그 파일을 불러오는것
 npm모듈은 특별한 디렉터리 node_modules npm init하면 생성되는 애들
 require함수를 사용하면 노드는 함수의 매개변수를 보고 어떤 타입인지를 판단함
+
+# 모듈이란? 
+모듈이란 **여러 기능들에 관한 코드가 모여있는 하나의 파일**로 다음과 같은 것들을 위해 사용된다
+- 유지보수성 : 기능들이 모듈화가 잘 되어있다면, 의존성을 그만큼 줄일 수 있기 때문에 어떤 기능을 개선한다거나 수정할 떄 훨씬 편하게 할 수 있다
+- 네임스페이스화 : 자바스크립트에서 전역변수는 전역공간을 가지기 때문에 코드의 양이 많아질수록 겹치는 네임스페이스가 많아질 수 있다. 그러나 모듈로 분리하면 모듈만의 네임스페이스를 갖기 때문에 그 문제가 해결된다.
+- 재사용성 : 똑같은 코드를 반복하지 않고 모듈로 분리시켜서 필요할 때마다 사용할 수 있다. 
+
+이러한 장점들을 살리기 위해서 모듈 개념이 필요했고, 자바스크립트에선 모듈을 개발하기 위한 여러가지 시도들이 있었다.
+CommonJS, AMD, UMD, 및 ES6등 각각의 특징과 사용법을 알아보자
+
+# CommonJS
+다른 모듈을 사용할 때는 require을, 모듈을 해당 스코프 밖으로 보낼 때에는 module.exports를 사용하는 방식으로, Node.js에서 현재 이 방식을 사용하고 있다. 
+
+```
+[a.js]
+const printHelloWorld = () => {
+  console.log('Hello Wolrd');
+};
+
+module.exports = {
+  printHelloWorld
+};
+[b.js]
+const func = require('./a.js'); // 같은 디렉토리에 있다고 가정
+func.printHelloWorld();
+```
+
+여기서 module.exports 의 module 은 현재 모듈에 대한 정보를 갖고 있는 객체이다. 이는 예약어이며 그 안에 id , path , parent 등의 속성이 있고 exports 객체를 가지고 있다.
+
+exports vs module.exports
+module.exports 외에도 exports 를 사용하기도 하는데 이 관계에 대해서 명확히 이해하고 있어야 한다. 정리하자면 아래와 같다.
+
+- module.exports 는 빈 객체를 참조한다.
+- exports 는 module.exports 를 참조한다.
+- require 는 항상 module.exports 를 리턴받는다.
+즉, 함수를 모듈 밖으로 내보내고자 할 때는 위에 예시에서 2가지 모두 사용할 수 있다.
+
+여기서 눈여겨봐야될 것은 default 의 유무인데 export 를 사용할 때는 named export 와 default export 를 사용할 수 있다. 단, default export는 모듈 내에서 한번만 사용할 수 있고 named export는 여러번 사용할 수 있다는 것이다. 그렇게 default export로 내보내면 import 에선 내보낸 이름 그대로 바로 사용할 수 있지만, named export로 내보내면 {} 로 묶어서 불러와야 한다. 이것이 기본적인 사용법이고 별칭(alias)을 as 로 주어서 다른 이름으로 사용할 수도 있고 * 와일드카드를 사용하여 한번에 불러오거나 내보낼 수도 있다. 이런 여러가지 변형기법의 사용은 
+<a href="https://velog.io/@doondoony/JavaScript-Module-System#-es6-modulesesm">여기 를 참고하자.</a>

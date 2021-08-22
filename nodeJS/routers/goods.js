@@ -1,7 +1,9 @@
 const express = require("express");
 const Goods = require("../schemas/Goods");
+const Cart = require("../schemas/cart");
 
 const router = express.Router();
+
 
 router.get("/goods", async (req, res, next) => {
   try {
@@ -32,6 +34,23 @@ router.post('/goods', async (req, res) => {
   // 같은게 없을경우 return으로 0이 나옴
   if (isExist.length == 0) {
     await Goods.create({ goodsId, name, thumbnailUrl, category, price });
+  }
+  res.send({ result: "success" });
+});
+
+// const Cart = require("../schemas/cart"); 위로 올려보내서 뭐를 import 하는지 한눈에 보자
+
+
+router.post("/goods/:goodsId/cart", async (req, res) => {
+  const { goodsId } = req.params;
+  const { quantity } = req.body;
+  isCart = await Cart.find({ goodsId });
+  if (isCart.length) {
+    // 해당 상품인 애 하나한테 적용
+    console.log(isCart,quantity);
+    await Cart.updateOne({ goodsId }, { $set: { quantity } });
+  } else {
+    await Cart.create({ goodsId: goodsId, quantity: quantity });
   }
   res.send({ result: "success" });
 });
