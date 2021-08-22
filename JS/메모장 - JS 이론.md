@@ -376,6 +376,10 @@ CommonJS, AMD, UMD, 및 ES6등 각각의 특징과 사용법을 알아보자
 
 # CommonJS
 다른 모듈을 사용할 때는 require을, 모듈을 해당 스코프 밖으로 보낼 때에는 module.exports를 사용하는 방식으로, Node.js에서 현재 이 방식을 사용하고 있다. 
+require은 module.exports를 리턴한다. exports는 module.exports를 참조하고 있으며 단축어에 불과하다(exports = module.exports //앞에 module을 안쓰고 싶어서 만든듯), exports와 module.exports는 용례를 익힐 필요가 있다.
+nodeJS에서는 모듈을 불러오기 위해 require함수를 씁니다. 
+
+
 
 ```
 [a.js]
@@ -400,6 +404,20 @@ module.exports 외에도 exports 를 사용하기도 하는데 이 관계에 대
 - exports 는 module.exports 를 참조한다.
 - require 는 항상 module.exports 를 리턴받는다.
 즉, 함수를 모듈 밖으로 내보내고자 할 때는 위에 예시에서 2가지 모두 사용할 수 있다.
+
+# ES6(ES2015) 방식
+import 와 export 구문을 사용하는 방식으로 나에게는 이 방식이 가장 익숙하다. 하지만 모든 브라우저가 지원하는 것이 아니기 때문에 Babel의 @babel/plugin-transform-modules-commonjs 를 통해 변환시켜서 사용한다. 모듈 A,B가 있고 각각을 export 로 내보내는 방식과 그에 따라 어떻게 import 로 불러오는지 살펴보자.
+
+```
+// moduleA.js
+const A = () => {};
+export default A;
+// moduleB.js
+export const B = () => {};
+// index.js
+import A from 'moduleA';
+import { B } from 'moduleB';
+```
 
 여기서 눈여겨봐야될 것은 default 의 유무인데 export 를 사용할 때는 named export 와 default export 를 사용할 수 있다. 단, default export는 모듈 내에서 한번만 사용할 수 있고 named export는 여러번 사용할 수 있다는 것이다. 그렇게 default export로 내보내면 import 에선 내보낸 이름 그대로 바로 사용할 수 있지만, named export로 내보내면 {} 로 묶어서 불러와야 한다. 이것이 기본적인 사용법이고 별칭(alias)을 as 로 주어서 다른 이름으로 사용할 수도 있고 * 와일드카드를 사용하여 한번에 불러오거나 내보낼 수도 있다. 이런 여러가지 변형기법의 사용은 
 <a href="https://velog.io/@doondoony/JavaScript-Module-System#-es6-modulesesm">여기 를 참고하자.</a>
