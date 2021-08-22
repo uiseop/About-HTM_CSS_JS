@@ -2,8 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const goodsRouter = require('./routes/goods.js')
-const userRouter = require('./routes/user.js')
+
 const connect = require('./schemas')
 connect()
 
@@ -14,8 +13,15 @@ app.use(express.json())
 app.use(express.static('public'));
 // static 파일을 제공하는 모듈웨어래 // 브라우저에서 public/images/image.png (x) images/image.png로 바로 불러올 수 있음
 
-app.use('/goods',goodsRouter)
-app.use('/user',userRouter)
+const goodsRouter = require("./routers/goods");
+app.use("/api", [goodsRouter]);
+// const goodsRouter = require('./routes/goods.js')
+// const userRouter = require('./routes/user.js')
+// app.use('/goods',goodsRouter)
+// app.use('/user',userRouter)
+
+
+
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

@@ -67,6 +67,9 @@ delete sam3.speak 처럼 delete를 통해 객체의 멤버를 삭제 가능함 O
 
 
 Object.keys(schools)와 Array.map은 object객체를 배열로 만들어줘
+복사배열 = Array.from(원래 배열)을 통해 기존 배열을 deepcopy한 배열을 만들어 사용해서 push를 사용해도 돼!
+객체의 경우 복사객체 = Object.assign({},원래객체) 를 통해 객체를 복사할 수 있어
+Object.keys(객체), Object.values(객체), Object.entries(객체) => [[키,값],...] 으로 이뤄진 배열을 반환하고 다시 이 값을 Object.fromEntries(배열)을 하면 다시 객체를 반환 => fetch할때 자주 사용되겠지?
 
 
 - Date : new Date()로 생성 가능 퀴찮아! 구글링 해! d.valueOf()사용하면 1970년1월1일부터 얼마나 지났는지 출력
