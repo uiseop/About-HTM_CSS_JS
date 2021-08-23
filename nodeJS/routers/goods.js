@@ -65,7 +65,7 @@ router.get("/cart", async (req, res) => {
 
   concatCart = cart.map(c => {
     for (let i = 0; i < goodsInCart.length; i++) {
-      if (goodsInCart[i].goodsId == c.goodsId) {
+      if (goodsInCart[i].goods Id == c.goodsId) {
         return { quantity: c.quantity, goods: goodsInCart[i] };
       }
     }
