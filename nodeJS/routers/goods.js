@@ -55,6 +55,17 @@ router.post("/goods/:goodsId/cart", async (req, res) => {
   res.send({ result: "success" });
 });
 
+router.delete("/goods/:goodsId/cart", async (req,res) => {
+  const { goodsId } = req.params
+  const isGoodsInCart = await Cart.find({ goodsId })
+  // Delete는 body를 넘겨주지 않음
+  if (isGoodsInCart.length > 0){
+    await Cart.deleteOne({ goodsId })
+  }
+
+  res.send({ result: "success" })
+})
+
 router.get("/cart", async (req, res) => {
   const cart = await Cart.find({});
   const goodsId = cart.map(cart => cart.goodsId);
@@ -65,7 +76,7 @@ router.get("/cart", async (req, res) => {
 
   concatCart = cart.map(c => {
     for (let i = 0; i < goodsInCart.length; i++) {
-      if (goodsInCart[i].goods Id == c.goodsId) {
+      if (goodsInCart[i].goodsId == c.goodsId) {
         return { quantity: c.quantity, goods: goodsInCart[i] };
       }
     }
@@ -75,5 +86,17 @@ router.get("/cart", async (req, res) => {
     cart: concatCart
   });
 });
+
+router.patch("/goods/:goodsId/cart", async (req, res) =>{
+  const { goodsId } = req.params
+  const { quantity } = req.body
+
+  const isGoodsInCart = await Cart.find({goodsId})
+  if(isGoodsInCart.length > 0){
+    await Cart.updateOne({ goodsId },  { $set : { quantity }})
+  }
+
+  res.send({ result : "success"})
+})
 
 module.exports = router;

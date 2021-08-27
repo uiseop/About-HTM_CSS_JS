@@ -35,12 +35,20 @@ app.get('/home', (req,res)=>{
     res.render('index')
 })
 
+app.get('/goods', (req,res)=>{
+    res.render('index')
+})
+
 app.get('/detail',(req,res)=>{
     res.render('detail')
 })
 
 app.get('/cart',(req,res)=>{
     res.render('cart')
+})
+
+app.get('/order',(req,res)=>{
+    res.render('order')
 })
 
 app.listen(port,()=>{
