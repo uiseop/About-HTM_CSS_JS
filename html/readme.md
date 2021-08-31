@@ -10,3 +10,7 @@ blockquote는 들여쓰기로 작성되어있어 <p>태그 안에서 작성하�
 6. 주소나 웹메일 주소 등 address 태그를 사용한데. 이텔릭체로 디폴트로 적용되서 랜더링해주는듯
 7. bdo 태그 : 택스트를 아랍어 형식으로 작성할 때 사용 (별로..)
 8. <b>b 태그</b> : 택스트를 굵게 해주는 태그 : font-weight 주는것이지!
+9. <mark>mark 태그</mark> : 하이라이터가 생기네. 형광펜 밑줄 쫙
+10. <small>small 태그</small> : 작은글씨로 써져 쿠쿸
+11. <sup>위로</sup><sub>아래로</sub> : sup,sub태그 지수 로그 표기할 때 쓰면 좋겠네 ex) log<sub>2</sub>2<sup>2</sup> = 2
+12. del 태그, ins 태그 : <del>삭제될</del> 애들, <ins>추가될</ins> 애들 
