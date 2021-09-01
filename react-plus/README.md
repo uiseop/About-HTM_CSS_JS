@@ -2,7 +2,7 @@
 
 <h2>초기 세팅</h2>
 router를 사용하기 위해 npm install react-router-dom 설치! -> 설치 후엔 항상 서버를 껐다가 다시 시작 : 라이브러리 변경사항 적용
-React.Fragment란? BrowserRouter란?? 
+React.Fragment란? -> 시작시 div를 설정해서 시작하는것 : 불필요한 div랜더링이 들어가지만 시작을 <React.Fragment>로 하면 불필요한 div랜더링을 피함 BrowserRouter란?? -> 웹개발을 할땐 react-router-dom만 사용하면 돼, 네이티브랑 합친게 react-router패키지 : 여기서 BrowserRouter,Route, Switch, Link가 포함 : BrowserRouter은 history API를 사용해서 UI를 업데이트해
 
 <h2>컴포넌트의 기본적인 세팅</h2>
 컴포넌트는 props가 필요해. 까먹지 않도록 defaultProps로 설정해주는거지. HOW?

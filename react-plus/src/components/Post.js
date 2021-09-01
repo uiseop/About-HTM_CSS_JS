@@ -1,10 +1,24 @@
 import React from 'react'
 import Grid from '../elements/Grid'
+import Image from '../elements/Image'
 const Post = (props) => {
-    console.log(props)
+
     return(
         <React.Fragment>
-            <Grid padding="16px">
+            <Grid>
+                <Grid is_flex>
+                    <Image shape="circle" src={props.src} />
+                </Grid>
+                <Grid padding="16px">
+
+                </Grid>
+                <Grid>
+                    <Image shape="rectangle" src={props.src}/>
+                </Grid>
+                <Grid padding="16px">
+
+                </Grid>
+                
                 <div>유저 프로필 / 유저 이름 / 입력 시간 / 작성자인가?(수정버튼) - 이미지/텍스트</div>
                 <div>내용 - 텍스트</div>
                 <div>이미지 - 이미지</div>
