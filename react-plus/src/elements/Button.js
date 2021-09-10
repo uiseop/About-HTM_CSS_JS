@@ -20,8 +20,8 @@ const ElButton = styled.button`
     background-color : #212121;
     color : white;
     padding : 12px 9px;
-    border : none;
     box-sizing : border-box;
+    border : none;
     ${props => props.is_margin? `margin : 0px 5px`:''};
     white-space:nowrap;
 `;

@@ -1,6 +1,25 @@
 import React from "react";
 import { Text, Input, Grid, Button } from "../elements";
+import { useState } from "react";
+import { setCookie,getCookie,deleteCookie } from "../shared/Cookie";
 const LogIn = (props) => {
+
+    const [id, setId] = useState("");
+    const [pwd, setPw] = useState("");
+
+    const changeId = (e) => {
+        setId(e.target.value);
+    };
+    const changePw = (e) => {
+        setPw(e.target.value);
+    };
+
+    const login = () => {
+        alert('쿠키가 실행중입니다')
+        setCookie("user_id", id);
+        setCookie("user_pwd", pwd);
+    };
+
     return (
         <React.Fragment>
             <Grid padding="16px">
@@ -8,10 +27,17 @@ const LogIn = (props) => {
                     로그인
                 </Text>
                 <Grid padding="16px 0px">
-                    <Input label="아이디" placeholder="아이디를 입력하세요" />
+                    <Input
+                        value={id}
+                        _onChange = {changeId}
+                        label="아이디"
+                        placeholder="아이디를 입력하세요"
+                    />
                 </Grid>
                 <Grid padding="16px 0px">
                     <Input
+                        value={pwd}
+                        _onChange = {changePw}
                         label="패스워드"
                         placeholder="패스워드를 입력하세요"
                         type="password"
@@ -20,7 +46,7 @@ const LogIn = (props) => {
                 <Button
                     text="로그인하기"
                     _onClick={() => {
-                        console.log("로그인 했어!!");
+                        login()
                     }}
                 />
             </Grid>

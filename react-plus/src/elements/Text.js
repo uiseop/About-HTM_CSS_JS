@@ -1,11 +1,10 @@
 import React from 'react'
-import { flushSync } from 'react-dom'
 import styled from 'styled-components'
 
 const Text = (props) => {
     const {bold, color, size, children, margin} = props
 
-    const styles = {bold:bold, color:color, size:size, margin:margin}
+    const styles = {bold:bold, color:color, size:size, margin}
     return(
         <P {...styles}>
             {children}
@@ -22,12 +21,10 @@ Text.defaultProps = {
 }
 
 const P = styled.p`
-color : ${(props) => props.color};
-font-size : ${(props) => props.size};
-font-weight : ${(props) => props.bold?"bold":"400"};
-margin : ${(props) => props.margin? props.margin : ''};
-display : inline;
-white-space : nowrap;
+color: ${(props) => props.color};
+font-size: ${(props) => props.size};
+font-weight: ${(props) => (props.bold? "600" : "400")};
+${(props) => (props.margin? `margin: ${props.margin};` : '')}
 `
 
 export default Text
