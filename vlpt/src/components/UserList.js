@@ -1,24 +1,37 @@
-import React from 'react'
+import React from 'react';
 
-const User = (props) => {
-    return(
-        <React.Fragment>
-            <div>
-                <b>{props.user.username}</b> <span>({props.user.email})</span>
-            </div>
-        </React.Fragment>
-    )
+const User = React.memo(function User({ user, onRemove, onToggle }) {
+  return (
+    <div>
+      <b
+        style={{
+          cursor: 'pointer',
+          color: user.active ? 'green' : 'black'
+        }}
+        onClick={() => onToggle(user.id)}
+      >
+        {user.username}
+      </b>
+      &nbsp;
+      <span>({user.email})</span>
+      <button onClick={() => onRemove(user.id)}>삭제</button>
+    </div>
+  );
+});
+
+function UserList({ users, onRemove, onToggle }) {
+  return (
+    <div>
+      {users.map(user => (
+        <User
+          user={user}
+          key={user.id}
+          onRemove={onRemove}
+          onToggle={onToggle}
+        />
+      ))}
+    </div>
+  );
 }
 
-const UserList = (props) => {
-    const users = props.users
-    return(
-        <React.Fragment>
-            {users.map(user=>(
-                <User user={user} key={user.id}/>
-            ))}
-        </React.Fragment>
-    )
-}
-
-export default UserList
+export default React.memo(UserList);

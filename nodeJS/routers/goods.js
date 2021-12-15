@@ -1,6 +1,6 @@
 const express = require("express");
 const Goods = require("../schemas/Goods");
-const Cart = require("../schemas/cart");
+const Cart = require("../schemas/Cart");
 
 const router = express.Router();
 
@@ -10,10 +10,16 @@ router.get("/goods", async (req, res, next) => {
     // url 뒤에 ?의 값이 query여 => 이 값을 가져옴
     const { category } = req.query;
     // 오름차순으로 가져온다
-    const goods = await Goods.find({ category }).sort("-goodsId");
-    console.log(goods , typeof(goods))
+    if(category){
+      const goods = await Goods.find({ category }).sort("-goodsId");
+      console.log(goods , typeof(goods))
+      res.json({ goods: goods });
+    }
+    else{
+      const goods = await Goods.find({}).sort("-goodsId");
+      res.json({ goods: goods });
+    }
     // 상품들은 지금 array형식이라 json형식으로 만들어 보내줌
-    res.json({ goods: goods });
   } catch (err) {
     console.error(err);
     next(err);
@@ -37,9 +43,6 @@ router.post('/goods', async (req, res) => {
   }
   res.send({ result: "success" });
 });
-
-// const Cart = require("../schemas/cart"); 위로 올려보내서 뭐를 import 하는지 한눈에 보자
-
 
 router.post("/goods/:goodsId/cart", async (req, res) => {
   const { goodsId } = req.params;

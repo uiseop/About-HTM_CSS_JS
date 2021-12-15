@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD 구현해보기</title>
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="index.html" onclick="
+                event.preventDefault();
+                welcome();
+            ">Web</a>
+        </h1>
+    </header>
+    <nav>
+        <ul>
+            <!-- 서버에서 데이터 받아오기 주소는 엘리스 링크/topics에 있음 각 topic은 id로 접근 가능해 -->
+        </ul>
+    </nav>
+    <article>
+        <h2>Welcome</h2>
+        Hello, WEB
+    </article>
+    <!-- 여기는 버튼들이 존재할것 -->
+    <ul id="control">
+        
+    </ul>
+    <script>
+        let data;
+        let selected_id = null
+        let URL = 'https://sti5ocgme1mg2ceoq80fz3bwncy0xxdd.runner-forwarder-a-01.elice.io'
+        async function init(){
+            control()
+            let type = await fetch(`${URL}/topics`);
+            let res = await type.json();
+            data = res
+            refreshNav()
+            let matching = location.pathname.match(/\/(read)\/([0-9]+)$/);
+            if(location.pathname === '/'){
+                welcome()
+            } else if(location.pathname === '/create'){
+                create()
+            } else if(matching[1] === 'read'){
+                article(Number(matching[2]))
+            }
+        }
+
+        init()
+
+        function inner(selector, content){
+            document.querySelector(selector).innerHTML = content
+        }
+
+        function createHandler(event){
+            event.preventDefault();
+            let _title = event.target.title.value;
+            let _body = event.target.body.value;
+            fetch(`${URL}/topics`, {
+                method:'POST', 
+                body:JSON.stringify({title:_title, body:_body}), 
+                headers: {
+                    'Content-Type': 'application/json'
+                }})
+                .then(type=>type.json())
+                .then(result=>{
+                    data.push(result);
+                    refreshNav();
+                    article(result.id);
+                })
+        }
+
+
+        function create(){
+            selected_id = null
+            control()
+            inner('article', `
+                <form onsubmit="createHandler(event)">
+                    <p><input type="text" name="title" placeholder="title"></p>
+                    <p><textarea name="body" placeholder="body"></textarea></p>
+                    <p><input type="submit"></p>
+                </form>
+            `)
+            window.history.pushState({}, null, '/create')
+        }
+
+        function refreshNav(){
+            control()
+            inner('nav > ul', data.map(d => `
+                <li><a href="${d.id}.html" onclick="
+                        event.preventDefault(); 
+                        article(${d.id});
+                    ">${d.title}</a>
+                </li>
+            `).join(''))
+        }
+
+        
+
+        function control(){
+            let update_delete_btn = ''
+            if(selected_id === null){
+            }else{
+                update_delete_btn = `<li><a href="/update/${selected_id}" onclick="updateHandler(event)">update</a></li>
+                <li><a href="/delete/${selected_id}" onclick="deleteHandler(event)">delete</a></li>`
+            }
+            inner('#control', `<li><a href="/create" onclick="
+                event.preventDefault();
+                create(); 
+                ">create</a></li>${update_delete_btn}`)
+        }
+
+        function updateHandler(e){
+            e.preventDefault()
+            window.history.pushState({}, null, `/update/${selected_id}`)
+            fetch(`${URL}/topics/${selected_id}`)
+                .then(type => type.json())
+                .then(res => {
+                    console.log(res)
+                    inner('article',`
+                        <form onsubmit="updateSubmitHandler(event)">
+                            <p><input type="text" name="title" placeholder="title" value="${res.title}"></p>
+                            <p><textarea name="body" placeholder="body">${res.body}</textarea></p>
+                            <p><input type="submit"></p>
+                        </form>
+                    `)
+                })
+            
+        }
+
+        function updateSubmitHandler(e){
+            e.preventDefault();
+            let _title = e.target.title.value
+            let _body = e.target.body.value
+
+            fetch(`${URL}/topics/${selected_id}`, {
+                method: "PUT",
+                body: JSON.stringify({title:_title, body:_body}),
+                headers: {
+                    'Content-Type' : 'application/json'
+                }
+            })
+            .then(type => type.json())
+            .then(res => {
+                for(let i=0; i<data.length; i++){
+                    if(data[i].id === selected_id){
+                        data[i] = res
+                        break
+                    }
+                }
+                refreshNav()
+                article(selected_id)
+            })
+        }
+
+        function deleteHandler(e){
+            e.preventDefault();
+            let conf = confirm('게시물을 삭제하시겠습니까?')
+            if(conf){
+                fetch(`${URL}/topics/${selected_id}`, {
+                    method: "DELETE"
+                })
+                .then(type => type.json())
+                .then(res => {
+                    console.log(`삭제되었습니다.`)
+                    alert('삭제되었습니다.')
+                    window.history.pushState({}, null, '/')
+                    init()
+                })
+            }
+        }
+
+        function article(id){
+            selected_id = id
+            control()
+            fetch(`${URL}/topics/${id}`)
+                .then(type => type.json())
+                .then(res => {
+                    inner('article', `<h2>${res.title}</h2>${res.body}`)
+                })
+            window.history.pushState({}, null, `/read/${id}`)
+        }
+
+        function welcome(){
+            selected_id = null
+            control()
+            inner('article', `<h2>Welcome</h2>Hello, WEB`)
+            // 단순히 현재 브라우저의 주소창을 바꾸는것. Single Page Application 방법
+            window.history.pushState({}, null, '/')
+        }
+    </script>
+</body>
+</html>

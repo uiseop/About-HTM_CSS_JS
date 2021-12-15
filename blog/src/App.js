@@ -45,12 +45,16 @@ function App() {
         </h3>
         <p>2월 18일 발행</p>
         <hr />
+      </div>
+      <div className="list">
         <h3>
           {title[1]} <span onClick={addLike}>👍</span>
           {like}
         </h3>
         <p>2월 15일 발행</p>
         <hr />
+      </div>
+      <div className="list">
         <h3>
           {title[2]} <span onClick={addLike}>👍</span>
           {like}
